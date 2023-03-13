@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
         CameraController.Instance.SetTarget(this.transform);
         blockTypeSelect = BlockType.Grass;
     }
@@ -50,7 +54,12 @@ public class PlayerController : MonoBehaviour
                 if (block != null)
                 {
                     if (block.IsDestroy)
+                    {
+                        MapController.Instance.ListBlocks.Remove(new Vector3Int(Mathf.RoundToInt(block.transform.position.x)
+                            , Mathf.RoundToInt(block.transform.position.y)
+                            , Mathf.RoundToInt(block.transform.position.z)));
                         Destroy(block.gameObject);
+                    }
                     else
                         block.DestroyBlock();
                 }
